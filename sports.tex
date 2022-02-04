@@ -1,0 +1,182 @@
+\documentclass[12pt]{article}
+
+\input{../../../../etc/macros}
+%\input{../../../../etc/mzlatex_macros}
+\input{../../../../etc/pdf_macros}
+
+\bibliographystyle{plain}
+
+\begin{document}
+
+\myheader
+\mytitle
+
+\hr
+
+\sectiontitle{Sports as Markov Chains}
+
+\hr
+
+\usefirefox
+
+\hr
+
+% \visual{Study Tip}{../../../../CommonInformation/Lessons/studytip.png}
+% \section*{Study Tip}
+
+% \hr
+
+\visual{Rating}{../../../../CommonInformation/Lessons/rating.png}
+\section*{Rating} %one of 
+% Everyone: contains no mathematics.
+Student: contains scenes of mild algebra or calculus that may require guidance.
+% Mathematically Mature: may contain mathematics beyond calculus with proofs.
+% Mathematicians Only: prolonged scenes of intense rigor.
+
+\hr
+
+\visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
+\section*{Section Starter Question}
+
+\hr
+
+\visual{Key Concepts}{../../../../CommonInformation/Lessons/keyconcepts.png}
+\section*{Key Concepts}
+
+\begin{enumerate}
+  \item 
+  \item 
+  \item 
+\end{enumerate}
+
+\hr
+
+\visual{Vocabulary}{../../../../CommonInformation/Lessons/vocabulary.png}
+\section*{Vocabulary}
+\begin{enumerate}
+  \item 
+  \item 
+\end{enumerate}
+
+\hr
+
+\visual{Mathematical Ideas}{../../../../CommonInformation/Lessons/mathematicalideas.png}
+\section*{Mathematical Ideas}
+
+\subsection*{Tennis}
+
+The scoring of tennis is unusual, for historical reasons which are not
+clear.  Roughly speaking, a player's  score advances
+by $15$ when a player scores a point because the opponent missed
+returning the ball or hits it out of bounds, with a few additional
+technical rules.  The maximum score to
+win a game is $60$.  So scores should be $0$, $15$, $30$, $45$, and $60$,
+except that the third score is abbreviated to $40$, for reasons that
+are again historically unclear.
+
+A game consists of a sequence of points played with the same player
+serving. A game is won by the first player to have won at least four
+points in total and at least two points more than the opponent. The
+running score of each game is described in a manner peculiar to
+tennis: scores from zero to three points are described as "love",
+"15", "30", and "40", respectively. If at least three points have been
+scored by each player, making the player's scores equal at 40 apiece,
+the score is not called out as "40–40", but rather as "deuce". If at
+least three points have been scored by each side and a player has one
+more point than the opponent, called ``ad in'' when the
+serving player is ahead, and ``ad out''  when the receiving
+player is ahead.
+
+To model tennis as a Markov chain, take the states of the chain as the
+possible scores.  Assume that transition from one state or score to
+another depends only on the present score and not on the preceding
+states or scores.  Clearly this assumption is idealizing the game,
+leaving out factors such as the order of service, psychological
+factors, fatigue, or adaptation to the opponent's style.  Other
+factors not mentioned can also affect the transition probabilities.
+
+\subsection*{Basketball}
+
+\visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
+\section*{Section Ending Answer}
+
+\subsection*{Sources}
+This section is adapted from: 
+
+\nocite{}
+\nocite{}
+
+\hr
+
+\visual{Algorithms, Scripts, Simulations}{../../../../CommonInformation/Lessons/computer.png}
+\section*{Algorithms, Scripts, Simulations}
+
+\subsection*{Algorithm}
+
+\subsection*{Scripts}
+
+\input{ _scripts}
+
+\hr
+
+\visual{Problems to Work}{../../../../CommonInformation/Lessons/solveproblems.png}
+\section*{Problems to Work for Understanding}
+\renewcommand{\theexerciseseries}{}
+\renewcommand{\theexercise}{\arabic{exercise}}
+
+\begin{exercise}
+  
+\end{exercise}
+\begin{solution}
+  
+\end{solution}
+\begin{exercise}
+  \begin{enumerate}[label=(\alpha*)]
+  \item 
+  \end{enumerate}
+\end{exercise}
+\begin{solution}
+  \begin{enumerate}[label=(\alpha*)]
+  \item 
+  \end{enumerate}
+\end{solution}
+
+\hr
+
+\visual{Books}{../../../../CommonInformation/Lessons/books.png}
+\section*{Reading Suggestion:}
+
+\bibliography{../../../../CommonInformation/bibliography}
+
+%   \begin{enumerate}
+%     \item 
+%     \item 
+%     \item 
+%   \end{enumerate}
+
+\hr
+
+\visual{Links}{../../../../CommonInformation/Lessons/chainlink.png}
+\section*{Outside Readings and Links:}
+\begin{enumerate}
+  \item  
+  \item  
+  \item  
+  \item 
+\end{enumerate}
+
+\section*{\solutionsname}
+\loadSolutions
+
+\hr
+
+\mydisclaim \myfooter
+
+Last modified:  \flastmod
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
