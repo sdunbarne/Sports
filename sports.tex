@@ -1,19 +1,24 @@
+%%% -*-LaTeX-*-
+%%% sports.tex.orig
+%%% Prettyprinted by texpretty lex version 0.02 [21-May-2001]
+%%% on Tue Jul  5 08:46:25 2022
+%%% for Steve Dunbar (sdunbar@family-desktop)
+%%% [[id:acfe42d6-c566-470a-93ef-673087cf5f87][Sports]]
+
 \documentclass[12pt]{article}
 
-\input{../../../../etc/macros}
-%\input{../../../../etc/mzlatex_macros}
+\input{../../../../etc/macros} % \input{../../../../etc/mzlatex_macros}
 \input{../../../../etc/pdf_macros}
 
 \bibliographystyle{plain}
 
 \begin{document}
 
-\myheader
-\mytitle
+\myheader \mytitle
 
 \hr
 
-\sectiontitle{Sports as Markov Chains}
+\sectiontitle{Modeling Sports With Markov Chains}
 
 \hr
 
@@ -27,9 +32,10 @@
 % \hr
 
 \visual{Rating}{../../../../CommonInformation/Lessons/rating.png}
-\section*{Rating} %one of 
+\section*{Rating} %one of
 % Everyone: contains no mathematics.
-Student: contains scenes of mild algebra or calculus that may require guidance.
+Student:  contains scenes of mild algebra or calculus that may require
+guidance.
 % Mathematically Mature: may contain mathematics beyond calculus with proofs.
 % Mathematicians Only: prolonged scenes of intense rigor.
 
@@ -38,15 +44,22 @@ Student: contains scenes of mild algebra or calculus that may require guidance.
 \visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
 \section*{Section Starter Question}
 
+What is your favorite sport?  Does the sport have discrete ``states''
+that can be modeled with a Markov chain?  What sports analytic measures
+exist to measure the game?
+
 \hr
 
 \visual{Key Concepts}{../../../../CommonInformation/Lessons/keyconcepts.png}
 \section*{Key Concepts}
 
 \begin{enumerate}
-  \item 
-  \item 
-  \item 
+    \item
+        Tennis can be modeled as a Markov chain with two absorbing
+        states.
+    \item
+        Basketball can be modeled as a Markov chain.  The sample path of
+        the chain predicts the final score of the game.
 \end{enumerate}
 
 \hr
@@ -54,57 +67,392 @@ Student: contains scenes of mild algebra or calculus that may require guidance.
 \visual{Vocabulary}{../../../../CommonInformation/Lessons/vocabulary.png}
 \section*{Vocabulary}
 \begin{enumerate}
-  \item 
-  \item 
+    \item
+    \item
 \end{enumerate}
 
 \hr
 
+\section*{Notation}
+\begin{enumerate}
+    \item
+\end{enumerate}
+
 \visual{Mathematical Ideas}{../../../../CommonInformation/Lessons/mathematicalideas.png}
 \section*{Mathematical Ideas}
 
+Sports provide examples of Markov chains with \( 8 \) to \( 20 \)
+states.  For some sports, winning or losing are absorbing states of the
+Markov chain.  In other cases, the sample path of the chain provides a
+score for the game.  The examples illustrate previously derived methods
+for Markov chains.
+
 \subsection*{Tennis}
 
-The scoring of tennis is unusual, for historical reasons which are not
-clear.  Roughly speaking, a player's  score advances
-by $15$ when a player scores a point because the opponent missed
-returning the ball or hits it out of bounds, with a few additional
-technical rules.  The maximum score to
-win a game is $60$.  So scores should be $0$, $15$, $30$, $45$, and $60$,
-except that the third score is abbreviated to $40$, for reasons that
-are again historically unclear.
+One player in a game is the server, and the opposing player is the
+receiver.  A coin toss determines the server in the first game. Service
+alternates game by game between the two players or teams.
 
-A game consists of a sequence of points played with the same player
-serving. A game is won by the first player to have won at least four
-points in total and at least two points more than the opponent. The
-running score of each game is described in a manner peculiar to
-tennis: scores from zero to three points are described as "love",
-"15", "30", and "40", respectively. If at least three points have been
-scored by each player, making the player's scores equal at 40 apiece,
-the score is not called out as "40–40", but rather as "deuce". If at
-least three points have been scored by each side and a player has one
-more point than the opponent, called ``ad in'' when the
-serving player is ahead, and ``ad out''  when the receiving
-player is ahead.
+A tennis game consists of a sequence of points played with the same
+player serving.  The first player to gain \( 4 \) points in total and at
+least two points more than the opponent wins.  The scoring of tennis is
+unusual for historical reasons that are not clear.  Roughly speaking, a
+player's point score advances by \( 15 \) when a player scores a point
+because the opponent missed returning the ball or hits it out of bounds,
+with a few more technical rules.  The maximum score to win a game is \(
+60 \) so game scores should be \( 0 \), \( 15 \), \( 30 \), \( 45 \),
+and \( 60 \).  But tradition abbreviates the third score to \( 40 \),
+and calls the \( 0 \) score ``love'' for reasons that are again
+historically unclear.  Thus, the running score of each game is special
+to tennis:  scores from zero to three points are ``love'', ``15'',
+``30'', and ``40'', respectively.  If each player has at least three
+points, making the player's scores equal at 40, the score is not called
+out as ``40--40'', but rather as ``deuce''.  If at least three points
+have been scored by each side and a player has one more point than the
+opponent, called ``ad in'' when the serving player is ahead, and ``ad
+out'' when the receiving player is ahead.
 
 To model tennis as a Markov chain, take the states of the chain as the
-possible scores.  Assume that transition from one state or score to
-another depends only on the present score and not on the preceding
-states or scores.  Clearly this assumption is idealizing the game,
-leaving out factors such as the order of service, psychological
-factors, fatigue, or adaptation to the opponent's style.  Other
-factors not mentioned can also affect the transition probabilities.
+possible scores.  For simplicity, assume that transition from one state
+or score to another is constant and depends only on the present score
+and not on the preceding states or scores. Figure~%
+\ref{fig:sports:tennis} illustrates the transitions among the states.
+Clearly this assumption is idealizing the game, leaving out factors such
+as the order of service, psychological factors, fatigue, or adaptation
+to the opponent's style. Other factors not mentioned can also affect the
+transition probabilities.%
+\index{tennis}
+
+\begin{figure}
+    \centering
+\begin{asy}
+  settings.outformat = "pdf";
+
+// import graph;
+
+size(5inches);
+
+real myfontsize = 12;
+real mylineskip = 1.2*myfontsize;
+pen mypen = fontsize(myfontsize, mylineskip);
+defaultpen(mypen);
+
+real marge = 0mm;
+
+real h = 1, v = 1;		// horiz and vert spacing
+
+pair r05=(0,5*v);
+pair rm14=(-0.75*h,4*v), r14=(0.75*h,4*v);
+pair rm13=(-1.5*h, 3*v), r03=(0,3*v), r13=(1.5*h, 3v);
+pair rm22=(-2*h, 2*v), rm12=(-0.75*h, 2*v), r12=(0.75*h, 2*v), r22=(2*h, 2*v);
+pair rm11=(-1.5*h,v), r11=(1.5*h,v);
+pair rm20=(-3*h, 0), rm10=(-1.5*h,0), r00=(0,0), r10=(1.5*h,0), r20=(3*h,0);
+
+object state00=draw("(1) 0:0", roundbox, r05, marge);
+
+object
+state015=draw("(2) 0:15", roundbox, rm14, marge),
+state150=draw("(3) 15:0", roundbox, r14, marge);
+
+object
+state030=draw("(4) 0:30", roundbox, rm13, marge),
+state1515=draw("(5) 15:15", roundbox, r03, marge),
+state300=draw("(6) 30:0", roundbox, r13, marge);
+
+object
+state040=draw("(7) 0:40", roundbox, rm22, marge),
+state1530=draw("(8) 15:30", roundbox, rm12, marge),
+state3015=draw("(9) 30:15", roundbox, r12, marge),
+state400=draw("(10) 40:0", roundbox, r22, marge);
+
+object
+state1540=draw("(11) 15:40", roundbox, rm11, marge),
+state4015=draw("(12) 40:15", roundbox, r11, marge);
+
+object
+stateBwins=draw("(16) B wins", roundbox, rm20, marge),
+state3040=draw("(13) 30:40", roundbox, rm10, marge),
+state3030=draw("(14) 30:30", roundbox, r00, marge),
+state4030=draw("(15) 40:30", roundbox, r10, marge),
+stateAwins=draw("(17) A wins", roundbox, r20, marge);
+
+add(new void(picture pic, transform t) {
+draw(pic, Label("$p$"),
+point(state00,S,t)--point(state150,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state00,S,t)--point(state015,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state150,S,t)--point(state300,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state150,S,t)--point(state1515,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state015,S,t)--point(state1515,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state015,S,t)--point(state030,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state015,S,t)--point(state1515,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state015,S,t)--point(state030,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state300,S,t)--point(state400,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state300,S,t)--point(state3015,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state1515,S,t)--point(state3015,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state1515,S,t)--point(state1530,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state030,S,t)--point(state1530,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state030,S,t)--point(state040,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state400,S,t)--point(stateAwins,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state400,S,t)--point(state4015,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state3015,S,t)--point(state4015,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state3015,S,t)--point(state3030,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state1530,S,t)--point(state3030,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state1530,S,t)--point(state1540,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state040,S,t)--point(state1540,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state040,S,t)--point(stateBwins,N,t),Arrow);
+
+
+draw(pic, Label("$p$"),
+point(state4015,S,t)--point(stateAwins,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state4015,S,t)--point(state4030,N,t),Arrow);
+
+draw(pic, Label("$p$"),
+point(state1540,S,t)--point(state3040,N,t),Arrow);
+draw(pic, Label("$q$"),
+point(state1540,S,t)--point(stateBwins,N,t),Arrow);
+
+draw(pic, Label("$p$", align=N),
+point(state4030,E,t)--point(stateAwins,W,t),Arrow);
+
+draw(pic, Label("$p$", align=N),
+point(state3030,NE,t)--point(state4030,NW,t),Arrow);
+draw(pic, Label("$q$", align=S),
+point(state4030,SW,t)--point(state3030,SE,t),Arrow);
+
+draw(pic, Label("$p$", align=N),
+point(state3040,NE,t)--point(state3030,NW,t),Arrow);
+draw(pic, Label("$q$", align=S),
+point(state3030,SW,t)--point(state3040,SE,t),Arrow);
+
+draw(pic, Label("$q$", align=S),
+point(state3040,W,t)--point(stateBwins,E,t),Arrow);
+  });
+\end{asy}
+    \caption{The state transition diagram for a game of tennis.  The
+    score for A is first, separated by a colon from the score for B. The
+    numbers in parentheses are the row and column numbers of the state
+    in the probability transition matrix.  The probability labels are
+    the same as the analogous random walk probabilities.}%
+    \label{fig:sports:tennis}
+\end{figure}
+
+As is natural for a game or a sport, this Markov chain has two absorbing
+states, ``A wins'' and ``B wins''.%
+\index{absorbing states}
+Because the victor of the game must win by at least \( 2 \) points,
+after \( 4 \) or \( 5 \) transitions the final set of states ``B wins'',
+``30:40'', ``30:30'', ``40:30'', ``A wins'' creates an absorbing random
+walk on \( 5 \) states.  The exercises compute the probability of
+winning a game for specific values of \( p \) and \( q \).
+
+After the first game is over, a second game starts with service passing
+to the other side, until a \emph{set} is completed.  This happens when
+one side wins at least \( 6 \) games with a margin of at least \( 2 \)
+games.  A set is completed as soon as the score is one of 6:0, 6:1, 6:2,
+6:3, 6:4, 7;5, 8:6 and so on.  One set follows another until one side
+wins the match by winning by at least \( 2 \) sets.  Therefore, a new
+Markov chain represents the progress of the set.  The absorbing
+probabilities of this higher level chain represent the probability of
+winning an individual game.  In this new Markov chain for the set, after
+\( 11 \) or \( 12 \) games again there is an absorbing random walk on \(
+5 \) states due to the requirement of winning by at least \( 2 \) games.%
+\index{absorbing random walk}
+
+Finally, tennis games have a \( 3 \) or \( 5 \) set \emph{match} to
+declare the overall winner by at least \( 2 \) sets, making a
+third-level Markov chain.  Women and junior players play \( 3 \) set
+matches and tennis has additional rules for tiebreakers.
 
 \subsection*{Basketball}
 
+This section assumes familiarity with the rules and terminology of
+basketball.%
+\index{basketball}
+The Markov chain model assumes the states and transition probabilities
+of a basketball game between teams A and B are the following.
+\begin{description}
+    \item[AOff]
+        Team A goes on offense.
+    \item[APen]
+        Penetrating offense by team A.
+    \item[AScore]
+        Basket scored by team A.
+    \item[Bdef]
+        Ball in possession of team B in defense.
+    \item[BOff]
+        Team B goes on offense.
+    \item[BPen]
+        Penetrating offense by team B.
+    \item[BScore]
+        Basket scored by team B.
+    \item[ADef]
+        Ball in possession of team A in defense.
+    \item[$p_{\text{eff,A}}$]
+        Probability of organizing a penetrating offense by team A.
+    \item[$p_{\text{eff,B}}$]
+        Probability of organizing a penetrating offense by team B.
+    \item[$p_{\text{d,A}}$]
+        Probability of successful defense by team A.
+    \item[$p_{\text{d,B}}$]
+        Probability of successful defense by team B.
+    \item[$p_{\text{r,A}}$]
+        Probability of offensive rebound by team A.
+    \item[$p_{\text{r,B}}$]
+        Probability of offensive rebound by team B.
+    \item[$p_{\text{s,A}}$]
+        Probability of scoring a basket by team A as a result of a
+        penetrating offense.
+    \item[$p_{\text{s,B}}$]
+        Probability of a scoring a basket by team B as a result of a
+        penetrating offense.
+\end{description}
+A diagram of the states and transition probabilities is in Figure~%
+\ref{fig:sports:bball}.  This model does not consider three-point shots
+and scoring by foul shots.  This simple Markov chain model could be the
+basis for extending the model with more states and using advanced sports
+analytics for the transition probabilities.
+
+\begin{figure}
+    \centering
+\begin{asy}
+settings.outformat = "pdf";
+
+// import graph;
+
+size(5inches);
+
+real myfontsize = 12;
+real mylineskip = 1.2*myfontsize;
+pen mypen = fontsize(myfontsize, mylineskip);
+defaultpen(mypen);
+
+real h = 1, v = 1, d = 1/2;	// horiz, vert offset spacing
+real marge = 1mm;
+pair a1 = (0, v), a2 = (h, v), a3 = (2*h, v), a4 = (3*h, v);
+pair a5 = (d, 0), a6 = (d+h, 0), a7 = (d+2*h, 0), a8 = (d+3*h, 0);
+ 
+object s1=draw("AOff", ellipse, a1, marge),
+   s2=draw("APen", ellipse, a2, marge),
+   s3=draw("AScore", ellipse, a3, marge),
+   s4=draw("BDef", ellipse, a4, marge);
+
+object s5=draw("BOff", ellipse, a5, marge),
+   s6=draw("BPen", ellipse, a6, marge),
+   s7=draw("BScore", ellipse, a7, marge),
+   s8=draw("Adef", ellipse, a8, marge);
+
+add(new void(picture pic, transform t) {
+    draw(pic, Label("$p_{\rm eff,A}$", align=N),
+	 point(s1,E,t)--point(s2,W,t), Arrow);
+    draw(pic, Label("$1-p_{\rm eff,A}$", align=N),
+     	 point(s1,N,t){NNE}..{SSE}point(s4,N,t), Arrow);
+
+    draw(pic, Label("$p_{\rm s,A}$", align=N),
+	 point(s2,E,t)--point(s3,W,t), Arrow);
+    draw(pic, Label("$1-p_{\rm r,A}-p_{\rm s,A}$", align=1.1*S),
+     	 point(s2,ENE,t){NE}..{SE}point(s4,W,t), Arrow);
+    draw(pic, Label("$p_{\rm r,A}$", position=Relative(0.25), align=NE),
+     	 point(s2,NE,t){NE}..{SE}point(s2,NW,t), Arrow);
+
+   draw(pic, Label("$1$", align=N),
+	 point(s3,SW,t)--point(s5,NE,t), Arrow);
+
+   draw(pic, Label("$p_{\rm d,A}$", align=N),
+	point(s4,NW,t){NNW}..{SW}point(s1,NNE,t),  Arrow);
+   draw(pic, Label("$1-p_{\rm d,A}$", position=Relative(0.25), align=S),
+	 point(s4,SW,t)--point(s5,ENE,t), Arrow);
+   
+   draw(pic, Label("$p_{\rm eff,B}$", align=S),
+       point(s5,E,t)..point(s6,W,t), Arrow);
+   draw(pic, Label("$1-p_{\rm eff,B}$", position=Relative(0.75), align=N),
+	point(s5,E+ENE,t){E}..{SE}point(s8,NW,t), Arrow);
+
+   draw(pic, Label("$p_{\rm s,B}$", align=N),
+	point(s6,E,t)--point(s7,W,t), Arrow);
+   draw(pic, Label("$1-p_{\rm r,B}-p_{\rm s,B}$", align=1.1S),
+     	point(s6,NE,t){ENE}..{SE}point(s8,W,t), Arrow);
+   draw(pic, Label("$p_{\rm r,B}$",  position=Relative(0.25), align=SE),
+     	point(s6,SE,t){SE}..{NE}point(s6,SW,t), Arrow);
+
+   draw(pic, Label("$1$", align=S),
+	point(s7,S,t){S}..{N}point(s1,S,t), Arrow);
+
+   draw(pic, Label("$p_{\rm d,B}$", position=Relative(0.25), align=S),
+	point(s8,S,t){SW}..{NW}point(s5,SSE,t), Arrow);
+   draw(pic, Label("$1-p_{\rm d,B}$", position=Relative(0.35), align=N),
+	point(s8,SSE,t){S}..{N}point(s1,SW,t), Arrow);
+});
+\end{asy}
+    \caption{The state transition diagram for a game of basketball.}%
+    \label{fig:sports:bball}
+\end{figure}
+
+College basketball games have \( 40 \) minutes playing time for both the
+men's and women's leagues.  The games last longer because of time-outs
+and foul shots stopping the clock, which this model does not take into
+account.  In a typical game, each team will have about \( 70 \)
+possessions, measured here as being in the state ``AOff'' and ``Boff'',
+because starting in this state leads ultimately to either a score
+``AScore'' or a turnover ``BDef''.
+
+As an example, take \( p_{\text{eff,A}} = 0.6 \) and \( p_{\text{eff,B}}
+= 0.75 \), so team A is not a good offensively as team B. It is
+reasonable to set \( p_{\text{d,A}} = 1 - p_{\text{eff,B}} \) and \( p_{\text
+{d,B}} = 1 - p_{\text{eff,A}} \).  Set \( p_{\text{r,A}} = p_{\text{r,B}}
+= 0.3 \).  Set \( p_{\text{r,A}} = 0.7 \) and \( p_{\text{r,B}} = 0.6 \)
+so that while team A is not as effective on offense, once it gets near
+the basket team A scores better than team B near the basket.  Then in
+one sample path with \( 450 \) steps in the Markov chain, A had \( 73 \)
+possessions and a final score of \( 86 \) and B had \( 74 \) possessions
+with a final score of \( 98 \).  Averaging over multiple samples can
+give a statistical look at the influence of effective offense versus
+basket scoring in winning this simple Markov chain model of basketball.
+This is an example where sample path properties are more important than
+stationary probabilities.  See the exercises for more details.
+
 \visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
-\section*{Section Ending Answer}
+\section*{Section Ending Answer} For tennis, the game points create a
+reasonable Markov chain model of a game.  The probability a player can
+make a point against as opponent is the analytic measure.  The sets and
+matches can be similarly modeled as Markov chains.  For basketball, the
+teams are in successive states of offense, near the basket, scoring, and
+turnovers.  Sports analytic measures can give the transition
+probabilities between states.
 
-\subsection*{Sources}
-This section is adapted from: 
-
-\nocite{}
-\nocite{}
+\subsection*{Sources} This section is adapted from
+\cite{sadovskii93}, Sections 3.2, 3.5, 3.9, 3.10, 3.13.
 
 \hr
 
@@ -113,9 +461,24 @@ This section is adapted from:
 
 \subsection*{Algorithm}
 
+\begin{algorithm}[H]
+    \DontPrintSemicolon
+    \KwData{Probability transition matrix \( P \), starting state}
+    \KwResult{Either absorption probabilities and waiting time to
+      absorption or sample path of the chain}
+    \BlankLine
+    \emph{Initialization and sample paths}\;
+    Load Markov chain library\;
+    Set state names, set transition probability matrix, set start
+    state\;
+    Determine absorption probabilities and waiting times OR\;
+    Set an example length and create a sample path of example length\;
+    Find sample paths and count scores.\;
+\end{algorithm}
+
 \subsection*{Scripts}
 
-\input{ _scripts}
+\input{sports_scripts}
 
 \hr
 
@@ -125,20 +488,44 @@ This section is adapted from:
 \renewcommand{\theexercise}{\arabic{exercise}}
 
 \begin{exercise}
-  
+    In tennis, assume A has probability \( p = 0.6 \) of winning a
+    point.  What is the probability of A winning a game?  If \( p = 0.51
+    \), what is the probability of A winning a game?  What is the
+    expected length and the standard deviation of the length of the game
+    in serves for each of these probabilities?
 \end{exercise}
 \begin{solution}
-  
+    Label the transient states in Figure~%
+    \ref{fig:sports:tennis} from \( 1 \) for 0:0 from to bottom, left to
+    right and label the absorbing states last.  Then 0:0 is state \( 1 \),
+    state 40:30 is state \( 13 \), state 30:40 is state \( 15 \).  The
+    absorbing state ``A wins'' is \( 17 \) and ``B wins'' is \( 16 \).
+    Use the script with this labeling.
+
+    For \( p = 0.6 \), the probability A wins is \( 0.736 \).  For \( p
+    = 0.6 \), the expected number of serves or points until absorption,
+    that is the game ends, is \( 6.4842 \) with a standard deviation of \(
+    2.590034 \).
+
+    For \( p = 0.51 \), the probability A wins is \( 0.525 \).  For \( p
+    = 0.51 \), the expected number of serves or points until absorption,
+    that is the game ends, is \( 6.7472 \), only slightly longer.  The
+    standard deviation is \( 2.770759 \), also slightly more.
+
+    The conclusion is that most games lasts between \( 4 \) and \( 9 \)
+    serves, even if the players are nearly evenly matched.
+
 \end{solution}
 \begin{exercise}
-  \begin{enumerate}[label=(\alpha*)]
-  \item 
-  \end{enumerate}
+    For the Markov chain model of basketball with the given transition
+    probabilities, what are the expected scores of the two teams?
 \end{exercise}
 \begin{solution}
-  \begin{enumerate}[label=(\alpha*)]
-  \item 
-  \end{enumerate}
+    Using the R script,
+\begin{verbatim}
+  Mean A Scores:  89.52 Standard Deviation:  7.038825 
+  Mean B Scores:  100.54 Standard Deviation:  7.428338 
+\end{verbatim}
 \end{solution}
 
 \hr
@@ -149,9 +536,9 @@ This section is adapted from:
 \bibliography{../../../../CommonInformation/bibliography}
 
 %   \begin{enumerate}
-%     \item 
-%     \item 
-%     \item 
+%     \item
+%     \item
+%     \item
 %   \end{enumerate}
 
 \hr
@@ -159,14 +546,13 @@ This section is adapted from:
 \visual{Links}{../../../../CommonInformation/Lessons/chainlink.png}
 \section*{Outside Readings and Links:}
 \begin{enumerate}
-  \item  
-  \item  
-  \item  
-  \item 
+    \item
+    \item
+    \item
+    \item
 \end{enumerate}
 
-\section*{\solutionsname}
-\loadSolutions
+\section*{\solutionsname} \loadSolutions
 
 \hr
 
